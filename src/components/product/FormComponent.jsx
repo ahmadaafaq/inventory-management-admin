@@ -13,8 +13,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Box, Button, Typography, useTheme } from "@mui/material";
 
 import API from "../../apis";
-import AddressFormComponent from "../address/AddressFormComponent";
-import Loader from "../common/Loader";
+// import AddressFormComponent from "../address/AddressFormComponent";
+// import Loader from "../common/Loader";
 import Toast from "../common/Toast";
 import ProductFormComponent from "./ProductFormComponent";
 
@@ -26,8 +26,8 @@ const FormComponent = () => {
     const [title, setTitle] = useState("Create");
     const [loading, setLoading] = useState(false);
     const [formData, setFormData] = useState({
-        productData: { values: null, validated: false },
-        addressData: { values: null, validated: false }
+        productData: { values: null, validated: false }
+        // addressData: { values: null, validated: false }
     });
     const [updatedValues, setUpdatedValues] = useState(null);
     const [dirty, setDirty] = useState(false);
@@ -35,7 +35,7 @@ const FormComponent = () => {
     const [reset, setReset] = useState(false);
 
     const productFormRef = useRef();
-    const addressFormRef = useRef();
+    // const addressFormRef = useRef();
 
     const navigateTo = useNavigate();
     const dispatch = useDispatch();
@@ -60,10 +60,9 @@ const FormComponent = () => {
     const updateProductAndAddress = useCallback(formData => {
         setLoading(true);
 
-        const paths = ["/update-product", "/update-address"];
+        const paths = ["/update-product"];
         const dataFields = [
-            { ...formData.productData.values },
-            { ...formData.addressData.values }
+            { ...formData.productData.values }
         ];
         console.log(dataFields, 'datafields')
 
@@ -117,23 +116,23 @@ const FormComponent = () => {
 
         API.ProductAPI.createProduct({ ...formData.productData.values })
             .then(({ data: product }) => {
-                if (product?.status === 'Success') {
-                    API.AddressAPI.createAddress({
-                        ...formData.addressData.values,
-                        parent_id: product.data.id,
-                        parent: 'product'
-                    })
-                        .then(address => {
-                            setLoading(false);
-                            toastAndNavigate(dispatch, true, "success", "Successfully Created", navigateTo, `/${selected.toLowerCase()}/listing`);
-                        })
-                        .catch(err => {
-                            console.log('errooorr', err)
-                            setLoading(false);
-                            toastAndNavigate(dispatch, true, err ? err : "An Error Occurred");
-                            throw err;
-                        });
-                };
+                // if (product?.status === 'Success') {
+                //     API.AddressAPI.createAddress({
+                //         ...formData.addressData.values,
+                //         parent_id: product.data.id,
+                //         parent: 'product'
+                //     })
+                //         .then(address => {
+                //             setLoading(false);
+                //             toastAndNavigate(dispatch, true, "success", "Successfully Created", navigateTo, `/${selected.toLowerCase()}/listing`);
+                //         })
+                //         .catch(err => {
+                //             console.log('errooorr', err)
+                //             setLoading(false);
+                //             toastAndNavigate(dispatch, true, err ? err : "An Error Occurred");
+                //             throw err;
+                //         });
+                // };
             })
             .catch(err => {
                 setLoading(false);
@@ -157,7 +156,7 @@ const FormComponent = () => {
 
     const handleSubmit = async () => {
         await productFormRef.current.Submit();
-        await addressFormRef.current.Submit();
+        // await addressFormRef.current.Submit();
         setSubmitted(true);
     };
 
@@ -189,7 +188,7 @@ const FormComponent = () => {
                 userId={id}
                 updatedValues={updatedValues?.productData}
             />
-            <AddressFormComponent
+            {/* <AddressFormComponent
                 onChange={(data) => {
                     handleFormChange(data, 'address');
                 }}
@@ -199,7 +198,7 @@ const FormComponent = () => {
                 reset={reset}
                 setReset={setReset}
                 updatedValues={updatedValues?.addressData}
-            />
+            /> */}
 
             <Box display="flex" justifyContent="end" m="20px">
                 {   //hide reset button on product update

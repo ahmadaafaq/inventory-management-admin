@@ -11,10 +11,14 @@ import { combineReducers } from "redux";
 import { displayToastReducer } from "./ToastReducer";
 import { menuItemReducer } from "./MenuItemReducer";
 import { setVendorsReducer } from "./VendorReducer";
+import { setInventoriesReducer } from "./InventoryReducer";
+import { setWarehousesReducer } from "./WarehouseReducer";
 import { setProductsReducer } from "./ProductReducer";
 
 const reducers = combineReducers({
     allVendors: setVendorsReducer,
+    allInventories: setInventoriesReducer,
+    allWarehouses: setWarehousesReducer,
     allProducts: setProductsReducer,
     menuItem: menuItemReducer,
     toastInfo: displayToastReducer

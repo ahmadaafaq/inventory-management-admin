@@ -12,19 +12,18 @@ import { Box, Checkbox, InputLabel, MenuItem, FormHelperText, FormControl, FormC
 import { Select, TextField, useMediaQuery } from "@mui/material";
 import { useFormik } from "formik";
 
-import productValidation from "./Validation";
+import inventoryValidation from "./Validation";
 
 const initialValues = {
-    name: "",
-    code: "",
-    status: "inactive",
-    barcode: "",
-    description: "",
-    quantity: "",
-    category: ""
+    name:"",
+    available_quantity: "",
+    min_stock_level: "",
+    max_stock_level: "",
+    reorder_point:"",
+    status: "inactive"
 };
 
-const ProductFormComponent = ({
+const InventoryFormComponent = ({
     onChange,
     refId,
     setDirty,
@@ -41,7 +40,7 @@ const ProductFormComponent = ({
 
     const formik = useFormik({
         initialValues: initialState,
-        validationSchema: productValidation,
+        validationSchema: inventoryValidation,
         enableReinitialize: true,
         onSubmit: () => watchForm()
     });
@@ -93,25 +92,12 @@ const ProductFormComponent = ({
                         "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
                     }}
                 >
-                     <TextField
-                        fullWidth
-                        variant="filled"
-                        type="text"
-                        label="Code"
-                        name="code"
-                        autoComplete="new-code"
-                        onBlur={formik.handleBlur}
-                        onChange={formik.handleChange}
-                        value={formik.values.code}
-                        error={!!formik.touched.code && !!formik.errors.code}
-                        helperText={formik.touched.code && formik.errors.code}
-                    />
                     <TextField
                         fullWidth
                         variant="filled"
                         type="text"
                         name="name"
-                        label="Name*"
+                        label="NAME"
                         autoComplete="new-name"
                         onBlur={formik.handleBlur}
                         onChange={formik.handleChange}
@@ -120,99 +106,61 @@ const ProductFormComponent = ({
                         helperText={formik.touched.name && formik.errors.name}
                         sx={{ gridColumn: "span 2" }}
                     />
-                     <TextField
-                        fullWidth
-                        variant="filled"
-                        type="text"
-                        label="Barcode"
-                        name="barcode"
-                        autoComplete="new-barcode"
-                        onBlur={formik.handleBlur}
-                        onChange={formik.handleChange}
-                        value={formik.values.barcode}
-                        error={!!formik.touched.barcode && !!formik.errors.barcode}
-                        helperText={formik.touched.barcode && formik.errors.barcode}
-                    />
-                     <TextField
-                        fullWidth
-                        variant="filled"
-                        type="text"
-                        label="Description"
-                        name="description"
-                        autoComplete="new-description"
-                        onBlur={formik.handleBlur}
-                        onChange={formik.handleChange}
-                        value={formik.values.description}
-                        error={!!formik.touched.description && !!formik.errors.description}
-                        helperText={formik.touched.description && formik.errors.description}
-                    />
-                     <TextField
+                    <TextField
                         fullWidth
                         variant="filled"
                         type="number"
-                        label="Quantity"
-                        name="quantity"
-                        autoComplete="new-quantity"
+                        name="available_quantity"
+                        label="AVAILABLE_QUANTITY*"
+                        autoComplete="new-available_quantity"
                         onBlur={formik.handleBlur}
                         onChange={formik.handleChange}
-                        value={formik.values.quantity}
-                        error={!!formik.touched.quantity && !!formik.errors.quantity}
-                        helperText={formik.touched.quantity && formik.errors.quantity}
-                    />
-                    <TextField
-                        fullWidth
-                        variant="filled"
-                        type="text"
-                        label="Category"
-                        name="category"
-                        autoComplete="new-category"
-                        onBlur={formik.handleBlur}
-                        onChange={formik.handleChange}
-                        value={formik.values.category}
-                        error={!!formik.touched.category && !!formik.errors.category}
-                        helperText={formik.touched.category && formik.errors.category}
-                    />
-                    {/* <TextField
-                        fullWidth
-                        variant="filled"
-                        type="text"
-                        label="Email"
-                        name="email"
-                        autoComplete="new-email"
-                        onBlur={formik.handleBlur}
-                        onChange={formik.handleChange}
-                        value={formik.values.email}
-                        error={!!formik.touched.email && !!formik.errors.email}
-                        helperText={formik.touched.email && formik.errors.email}
+                        value={formik.values.available_quantity}
+                        error={!!formik.touched.available_quantity && !!formik.errors.available_quantity}
+                        helperText={formik.touched.available_quantity && formik.errors.available_quantity}
                         sx={{ gridColumn: "span 2" }}
                     />
                     <TextField
                         fullWidth
                         variant="filled"
-                        type="text"
-                        label="Contact Number*"
-                        name="contact_no"
-                        autoComplete="new-contact"
+                        type="number"
+                        label="MIN_STOCK_LEVEL"
+                        name="min_stock_level"
+                        autoComplete="new-min_stock_level"
                         onBlur={formik.handleBlur}
                         onChange={formik.handleChange}
-                        value={formik.values.contact_no}
-                        error={!!formik.touched.contact_no && !!formik.errors.contact_no}
-                        helperText={formik.touched.contact_no && formik.errors.contact_no}
-                    /> */}
-                    {/* <TextField
+                        value={formik.values.min_stock_level}
+                        error={!!formik.touched.min_stock_level && !!formik.errors.min_stock_level}
+                        helperText={formik.touched.min_stock_level && formik.errors.min_stock_level}
+                        sx={{ gridColumn: "span 2" }}
+                    />
+                    <TextField
                         fullWidth
                         variant="filled"
-                        type="text"
-                        label="Email"
-                        name="email"
-                        autoComplete="new-email"
+                        type="number"
+                        label="MAX_STOCK_LEVEL"
+                        name="max_stock_level"
+                        autoComplete="new-max_stock_level"
                         onBlur={formik.handleBlur}
                         onChange={formik.handleChange}
-                        value={formik.values.email}
-                        error={!!formik.touched.email && !!formik.errors.email}
-                        helperText={formik.touched.email && formik.errors.email}
-                        sx={{ gridColumn: "span 2" }}
-                    /> */}
+                        value={formik.values.max_stock_level}
+                        error={!!formik.touched.max_stock_level && !!formik.errors.max_stock_level}
+                        helperText={formik.touched.max_stock_level && formik.errors.max_stock_level}
+                    />
+
+                    <TextField
+                        fullWidth
+                        variant="filled"
+                        type="number"
+                        label="REORDER_POINT"
+                        name="reorder_point"
+                        autoComplete="new-reorder_point"
+                        onBlur={formik.handleBlur}
+                        onChange={formik.handleChange}
+                        value={formik.values.reorder_point}
+                        error={!!formik.touched.reorder_point && !!formik.errors.reorder_point}
+                        helperText={formik.touched.reorder_point && formik.errors.reorder_point}
+                    />
 
                     <FormControl variant="filled" sx={{ minWidth: 120 }}
                         error={!!formik.touched.status && !!formik.errors.status}
@@ -237,4 +185,4 @@ const ProductFormComponent = ({
     );
 }
 
-export default ProductFormComponent;
+export default InventoryFormComponent;

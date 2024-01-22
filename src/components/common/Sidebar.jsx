@@ -115,6 +115,24 @@ const Sidebar = () => {
             />
             <Divider />
           </Box>
+          <Box paddingLeft={isCollapsed ? undefined : "10%"}>
+            <SidebarItem
+              title="Warehouse"
+              to="/warehouse/listing"
+              icon={<Api />}
+              selected={selected}
+            />
+            <Divider />
+          </Box>
+          <Box paddingLeft={isCollapsed ? undefined : "10%"}>
+            <SidebarItem
+              title="Inventory"
+              to="/inventory/listing"
+              icon={<Api />}
+              selected={selected}
+            />
+            <Divider />
+          </Box>
         </Menu>
       </ProSidebar>
     </Box >

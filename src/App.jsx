@@ -23,6 +23,10 @@ const VendorFormComponent = lazy(() => import("./components/vendor/FormComponent
 const VendorListingComponent = lazy(() => import("./components/vendor/ListingComponent"));
 const ProductFormComponent = lazy(() => import("./components/product/FormComponent"));
 const ProductListingComponent = lazy(() => import("./components/product/ListingComponent"));
+const WarehouseFormComponent = lazy(() => import("./components/warehouse/FormComponent"));
+const WarehouseListingComponent = lazy(() => import("./components/warehouse/ListingComponent"));
+const InventoryFormComponent = lazy(() => import("./components/inventory/FormComponent"));
+const InventoryListingComponent = lazy(() => import("./components/inventory/ListingComponent"));
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -83,6 +87,14 @@ function App() {
                 <Route exact path="/product/create" element={<ProductFormComponent />} />
                 <Route exact path="/product/update/:id" element={<ProductFormComponent />} />
                 <Route exact path="/product/listing" element={<ProductListingComponent />} />
+
+                <Route exact path="/warehouse/create" element={<WarehouseFormComponent />} />
+                <Route exact path="/warehouse/update/:id" element={<WarehouseFormComponent />} />
+                <Route exact path="/warehouse/listing" element={<WarehouseListingComponent />} />   
+
+                <Route exact path="/inventory/create" element={<InventoryFormComponent />} />
+                <Route exact path="/inventory/update/:id" element={<InventoryFormComponent />} />
+                <Route exact path="/inventory/listing" element={<InventoryListingComponent />} />   
               </Routes>
             </main>
           </Suspense>

@@ -28,40 +28,40 @@ export const datagridColumns = () => {
 
     const columns = [
         {
-            field: "code",
-            headerName: "Code",
-            headerAlign: "center",
-            align: "center",
-            flex: 1,
-            minWidth: 120
-        },
-        {
             field: "name",
-            headerName: "Name",
+            headerName: "NAME",
             headerAlign: "center",
             align: "center",
             flex: 1,
             minWidth: 120
         },
         {
-            field: "description",
-            headerName: "Description",
+            field: "available_quantity",
+            headerName: "AVAILABLE_QUANTITY",
+            headerAlign: "center",
+            align: "center",
+            flex: 1,
+            minWidth: 120
+        },
+        {
+            field: "min_stock_level",
+            headerName: "MIN_STOCK_LEVEL",
             headerAlign: "center",
             align: "center",
             flex: 1,
             minWidth: 100
         },
         {
-            field: "category",
-            headerName: "Category",
+            field: "max_stock_level",
+            headerName: "MAX_STOCK_LEVEL",
             headerAlign: "center",
             align: "center",
             flex: 1,
-            minWidth: 180
+            minWidth: 100
         },
         {
-            field: "quantity",
-            headerName: "Quantity",
+            field: "reorder_point",
+            headerName: "REORDER_POINT",
             headerAlign: "center",
             align: "center",
             flex: 1,

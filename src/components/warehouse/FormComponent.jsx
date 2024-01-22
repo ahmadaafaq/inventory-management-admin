@@ -1,9 +1,9 @@
 /**
- * Copyright © 2023, vendor CRM Inc. ALL RIGHTS RESERVED.
+ * Copyright © 2023, codeVamp CRM Inc. ALL RIGHTS RESERVED.
  *
- * This software is the confidential information of vendor CRM Inc., and is licensed as
+ * This software is the confidential information of codeVamp CRM Inc., and is licensed as
  * restricted rights software. The use,reproduction, or disclosure of this software is subject to
- * restrictions set forth in your license agreement with vendor CRM.
+ * restrictions set forth in your license agreement with codeVamp CRM.
  */
 
 import React, { useCallback, useEffect, useState, useRef } from "react";
@@ -16,7 +16,7 @@ import API from "../../apis";
 import AddressFormComponent from "../address/AddressFormComponent";
 import Loader from "../common/Loader";
 import Toast from "../common/Toast";
-import ProductFormComponent from "./ProductFormComponent";
+import WarehouseFormComponent from "./WarehouseFormComponent";
 
 import { setMenuItem } from "../../redux/actions/NavigationAction";
 import { tokens, themeSettings } from "../../theme";
@@ -26,7 +26,7 @@ const FormComponent = () => {
     const [title, setTitle] = useState("Create");
     const [loading, setLoading] = useState(false);
     const [formData, setFormData] = useState({
-        productData: { values: null, validated: false },
+        warehouseData: { values: null, validated: false },
         addressData: { values: null, validated: false }
     });
     const [updatedValues, setUpdatedValues] = useState(null);
@@ -34,7 +34,7 @@ const FormComponent = () => {
     const [submitted, setSubmitted] = useState(false);
     const [reset, setReset] = useState(false);
 
-    const productFormRef = useRef();
+    const warehouseFormRef = useRef();
     const addressFormRef = useRef();
 
     const navigateTo = useNavigate();
@@ -49,7 +49,7 @@ const FormComponent = () => {
     const { state } = useLocation();
     const { getLocalStorage, toastAndNavigate } = Utility();
 
-    //after page refresh the id in router state becomes undefined, so getting product id from url params
+    //after page refresh the id in router state becomes undefined, so getting warehouse id from url params
     let id = state?.id || userParams?.id;
 
     useEffect(() => {
@@ -57,12 +57,12 @@ const FormComponent = () => {
         dispatch(setMenuItem(selectedMenu.selected));
     }, []);
 
-    const updateProductAndAddress = useCallback(formData => {
+    const updateWarehouseAndAddress = useCallback(formData => {
         setLoading(true);
 
-        const paths = ["/update-product", "/update-address"];
+        const paths = ["/update-warehouse", "/update-address"];
         const dataFields = [
-            { ...formData.productData.values },
+            { ...formData.warehouseData.values },
             { ...formData.addressData.values }
         ];
         console.log(dataFields, 'datafields')
@@ -89,14 +89,14 @@ const FormComponent = () => {
             });
     }, [formData]);
 
-    const populateProductData = (id) => {
+    const populateWarehouseData = (id) => {
         setLoading(true);
-        const paths = [`/get-by-pk/product/${id}`, `/get-address/product/${id}`];
+        const paths = [`/get-by-pk/warehouse/${id}`, `/get-address/warehouse/${id}`];
         API.CommonAPI.multipleAPICall("GET", paths)
             .then(responses => {
                 console.log('Responses', responses);
                 const dataObj = {
-                    productData: responses[0].data.data,
+                    warehouseData: responses[0].data.data,
                     addressData: responses[1]?.data?.data
                 };
                 console.log('form component', dataObj)
@@ -111,17 +111,17 @@ const FormComponent = () => {
             });
     };
 
-    const createProduct = () => {
+    const createWarehouse = () => {
         setLoading(true);
         console.log('formData', formData)
 
-        API.ProductAPI.createProduct({ ...formData.productData.values })
-            .then(({ data: product }) => {
-                if (product?.status === 'Success') {
+        API.WarehouseAPI.createWarehouse({ ...formData.warehouseData.values })
+            .then(({ data: warehouse }) => {
+                if (warehouse?.status === 'Success') {
                     API.AddressAPI.createAddress({
                         ...formData.addressData.values,
-                        parent_id: product.data.id,
-                        parent: 'product'
+                        parent_id: warehouse.data.id,
+                        parent: 'warehouse'
                     })
                         .then(address => {
                             setLoading(false);
@@ -142,27 +142,27 @@ const FormComponent = () => {
             });
     };
 
-    //Create/Update/Populate product
+    //Create/Update/Populate warehouse
     useEffect(() => {
         if (id && !submitted) {
             setTitle("Update");
-            populateProductData(id);
+            populateWarehouseData(id);
         }
-        if (formData.productData.validated && formData.addressData.validated) {
-            formData.productData.values?.id ? updateProductAndAddress(formData) : createProduct();
+        if (formData.warehouseData.validated && formData.addressData.validated) {
+            formData.warehouseData.values?.id ? updateWarehouseAndAddress(formData) : createWarehouse();
         } else {
             setSubmitted(false);
         }
     }, [id, submitted]);
 
     const handleSubmit = async () => {
-        await productFormRef.current.Submit();
+        await warehouseFormRef.current.Submit();
         await addressFormRef.current.Submit();
         setSubmitted(true);
     };
 
     const handleFormChange = (data, form) => {
-        form === 'product' ? setFormData({ ...formData, productData: data }) :
+        form === 'warehouse' ? setFormData({ ...formData, warehouseData: data }) :
             setFormData({ ...formData, addressData: data });
     };
 
@@ -178,16 +178,16 @@ const FormComponent = () => {
             >
                 {`${title} ${selected}`}
             </Typography>
-            <ProductFormComponent
+            <WarehouseFormComponent
                 onChange={(data) => {
-                    handleFormChange(data, 'product');
+                    handleFormChange(data, 'warehouse');
                 }}
-                refId={productFormRef}
+                refId={warehouseFormRef}
                 setDirty={setDirty}
                 reset={reset}
                 setReset={setReset}
                 userId={id}
-                updatedValues={updatedValues?.productData}
+                updatedValues={updatedValues?.warehouseData}
             />
             <AddressFormComponent
                 onChange={(data) => {
@@ -202,7 +202,7 @@ const FormComponent = () => {
             />
 
             <Box display="flex" justifyContent="end" m="20px">
-                {   //hide reset button on product update
+                {   //hide reset button on warehouse update
                     title === "Update" ? null :
                         <Button type="reset" color="warning" variant="contained" sx={{ mr: 3 }}
                             disabled={!dirty || submitted}

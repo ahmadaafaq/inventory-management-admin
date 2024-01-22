@@ -1,14 +1,14 @@
 
-export const studentData = [
-    { month: 'Jan', students: 1200, newStudents: 300 },
-    { month: 'Feb', students: 1500, newStudents: 200 },
-    { month: 'Mar', students: 334, newStudents: 40 },
-    { month: 'Apr', students: 1500, newStudents: 200 },
-    { month: 'May', students: 1500, newStudents: 24 },
-    { month: 'June', students: 1500, newStudents: 400 },
-    { month: 'July', students: 1500, newStudents: 2400 },
-    { month: 'Aug', students: 1500, newStudents: 2004 },
-    { month: 'Sep', students: 1500, newStudents: 2004 },
+export const productData = [
+    { month: 'Jan', products: 1200, newproducts: 300 },
+    { month: 'Feb', products: 1500, newproducts: 200 },
+    { month: 'Mar', products: 334, newproducts: 40 },
+    { month: 'Apr', products: 1500, newproducts: 200 },
+    { month: 'May', products: 1500, newproducts: 24 },
+    { month: 'June', products: 1500, newproducts: 400 },
+    { month: 'July', products: 1500, newproducts: 2400 },
+    { month: 'Aug', products: 1500, newproducts: 2004 },
+    { month: 'Sep', products: 1500, newproducts: 2004 },
 
     // Add more data points as needed
   ];

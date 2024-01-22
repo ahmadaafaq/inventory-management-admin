@@ -12,13 +12,19 @@ import { ProSidebar, Menu, MenuItem } from "react-pro-sidebar/dist";
 import "react-pro-sidebar/dist/css/styles.css";
 
 import { Box, IconButton, Typography, useTheme, useMediaQuery, Divider } from "@mui/material";
-import { Api, TuneOutlined } from '@mui/icons-material';
+import TuneOutlined from '@mui/icons-material/TuneOutlined'
+import PeopleAltRoundedIcon from '@mui/icons-material/PeopleAltRounded';
+import GridViewRoundedIcon from '@mui/icons-material/GridViewRounded';
+import Inventory2RoundedIcon from '@mui/icons-material/Inventory2Rounded';
+import WarehouseRoundedIcon from '@mui/icons-material/WarehouseRounded';
+import InventoryRoundedIcon from '@mui/icons-material/InventoryRounded';
 
 import API from "../../apis";
 import { SidebarItem } from "./SidebarItem";
 import { tokens } from "../../theme";
-// import { Utility } from "../utility";
 
+// import { Utility } from "../utility";
+import logo from "../image/InventoryMangement.png"
 import "./index.css";
 
 const Sidebar = () => {
@@ -74,7 +80,7 @@ const Sidebar = () => {
                 ml="5px"
               >
                 <Typography variant="h3" color={colors.grey[100]}>
-                  Company Name
+                  Inventory Management
                 </Typography>
                 <IconButton onClick={() => setIsCollapsed(!isCollapsed)}>
                   <TuneOutlined />
@@ -89,7 +95,7 @@ const Sidebar = () => {
               <Box display="flex" justifyContent="center" alignItems="center">
                 <img
                   alt="profile-user"
-                  src=""
+                  src={logo}
                   style={{ cursor: "pointer", borderRadius: "10%", width: "60%" }}
                 />
               </Box>
@@ -99,9 +105,18 @@ const Sidebar = () => {
           {/* MENU ITEMS */}
           <Box paddingLeft={isCollapsed ? undefined : "10%"}>
             <SidebarItem
+              title="Dashboard"
+              to="/"
+              icon={<GridViewRoundedIcon />}
+              selected={selected}
+              menuVisibility={2}
+            />
+          </Box>
+          <Box paddingLeft={isCollapsed ? undefined : "10%"}>
+            <SidebarItem
               title="Vendor"
               to="/vendor/listing"
-              icon={<Api />}
+              icon={<PeopleAltRoundedIcon />}
               selected={selected}
             />
             <Divider />
@@ -110,7 +125,7 @@ const Sidebar = () => {
             <SidebarItem
               title="Product"
               to="/product/listing"
-              icon={<Api />}
+              icon={<Inventory2RoundedIcon />}
               selected={selected}
             />
             <Divider />
@@ -119,7 +134,7 @@ const Sidebar = () => {
             <SidebarItem
               title="Warehouse"
               to="/warehouse/listing"
-              icon={<Api />}
+              icon={<WarehouseRoundedIcon />}
               selected={selected}
             />
             <Divider />
@@ -128,7 +143,7 @@ const Sidebar = () => {
             <SidebarItem
               title="Inventory"
               to="/inventory/listing"
-              icon={<Api />}
+              icon={<InventoryRoundedIcon />}
               selected={selected}
             />
             <Divider />

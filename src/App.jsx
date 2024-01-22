@@ -19,6 +19,8 @@ import Sidebar from "./components/common/Sidebar";
 import Loader from "./components/common/Loader";
 import { Utility } from "./components/utility";
 
+const Dashboard = lazy(() => import("./components/dashboard/Dashboard"));
+
 const VendorFormComponent = lazy(() => import("./components/vendor/FormComponent"));
 const VendorListingComponent = lazy(() => import("./components/vendor/ListingComponent"));
 const ProductFormComponent = lazy(() => import("./components/product/FormComponent"));
@@ -80,6 +82,8 @@ function App() {
             <main className="content">
               <Topbar />
               <Routes>
+                <Route exact path="/" element={<Dashboard />} />
+
                 <Route exact path="/vendor/create" element={<VendorFormComponent />} />
                 <Route exact path="/vendor/update/:id" element={<VendorFormComponent />} />
                 <Route exact path="/vendor/listing" element={<VendorListingComponent />} />
@@ -90,11 +94,11 @@ function App() {
 
                 <Route exact path="/warehouse/create" element={<WarehouseFormComponent />} />
                 <Route exact path="/warehouse/update/:id" element={<WarehouseFormComponent />} />
-                <Route exact path="/warehouse/listing" element={<WarehouseListingComponent />} />   
+                <Route exact path="/warehouse/listing" element={<WarehouseListingComponent />} />
 
                 <Route exact path="/inventory/create" element={<InventoryFormComponent />} />
                 <Route exact path="/inventory/update/:id" element={<InventoryFormComponent />} />
-                <Route exact path="/inventory/listing" element={<InventoryListingComponent />} />   
+                <Route exact path="/inventory/listing" element={<InventoryListingComponent />} />
               </Routes>
             </main>
           </Suspense>

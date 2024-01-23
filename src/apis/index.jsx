@@ -8,6 +8,7 @@
 
 import { AddressAPI } from "./AddressAPI";
 import { VendorAPI } from "./VendorAPI";
+import { OrderAPI } from "./OrderAPI";
 import { WarehouseAPI } from "./WarehouseAPI";
 import { InventoryAPI } from "./InventoryAPI";
 import { ProductAPI } from "./ProductAPI"
@@ -19,6 +20,7 @@ import { CommonAPI } from "./CommonAPI";
 export default {
     AddressAPI,
     VendorAPI,
+    OrderAPI,
     InventoryAPI,
     WarehouseAPI,
     ProductAPI,

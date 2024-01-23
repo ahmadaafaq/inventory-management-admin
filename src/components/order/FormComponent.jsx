@@ -13,9 +13,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { Box, Button, Typography, useTheme } from "@mui/material";
 
 import API from "../../apis";
+// import AddressFormComponent from "../address/AddressFormComponent";
 import Loader from "../common/Loader";
 import Toast from "../common/Toast";
-import ProductFormComponent from "./ProductFormComponent";
+import OrderFormComponent from "./OrderFormComponent";
 
 import { setMenuItem } from "../../redux/actions/NavigationAction";
 import { tokens, themeSettings } from "../../theme";
@@ -25,15 +26,15 @@ const FormComponent = () => {
     const [title, setTitle] = useState("Create");
     const [loading, setLoading] = useState(false);
     const [formData, setFormData] = useState({
-        productData: { values: null, validated: false }
+        orderData: { values: null, validated: false }
     });
     const [updatedValues, setUpdatedValues] = useState(null);
     const [dirty, setDirty] = useState(false);
     const [submitted, setSubmitted] = useState(false);
     const [reset, setReset] = useState(false);
 
-    const productFormRef = useRef();
-    // const addressFormRef = useRef();
+    const orderFormRef = useRef();
+   // const addressFormRef = useRef();
 
     const navigateTo = useNavigate();
     const dispatch = useDispatch();
@@ -47,7 +48,7 @@ const FormComponent = () => {
     const { state } = useLocation();
     const { getLocalStorage, toastAndNavigate } = Utility();
 
-    //after page refresh the id in router state becomes undefined, so getting product id from url params
+    //after page refresh the id in router state becomes undefined, so getting order id from url params
     let id = state?.id || userParams?.id;
 
     useEffect(() => {
@@ -55,12 +56,12 @@ const FormComponent = () => {
         dispatch(setMenuItem(selectedMenu.selected));
     }, []);
 
-    const updateProduct = useCallback(formData => {
+    const updateOrder = useCallback(formData => {
         setLoading(true);
 
-        const paths = ["/update-product"];
+        const paths = ["/update-order"];
         const dataFields = [
-            { ...formData.productData.values }
+            { ...formData.orderData.values }
         ];
         console.log(dataFields, 'datafields')
 
@@ -68,9 +69,11 @@ const FormComponent = () => {
             .then(response => {
                 let status = true;
                 console.log(response, 'response update')
-                if (response.data.status !== "Success") {
-                    status = false;
-                };
+                response.forEach(response => {
+                    if (response.data.status !== "Success") {
+                        status = false;
+                    };
+                });
                 if (status) {
                     setLoading(false);
                     toastAndNavigate(dispatch, true, "info", "Successfully Updated", navigateTo, `/${selected.toLowerCase()}/listing`);
@@ -84,14 +87,14 @@ const FormComponent = () => {
             });
     }, [formData]);
 
-    const populateProductData = (id) => {
+    const populateOrderData = (id) => {
         setLoading(true);
-        const paths = [`/get-by-pk/product/${id}`];
+        const paths = [`/get-by-pk/order/${id}`];
         API.CommonAPI.multipleAPICall("GET", paths)
             .then(response => {
                 console.log('Responses', response);
                 const dataObj = {
-                    productData: response[0].data.data
+                    orderData: response[0].data.data
                 };
                 console.log('form component', dataObj)
                 setUpdatedValues(dataObj);
@@ -105,47 +108,47 @@ const FormComponent = () => {
             });
     };
 
-    const createProduct = () => {
+    const createOrder = () => {
         setLoading(true);
         console.log('formData', formData)
 
-        API.ProductAPI.createProduct({ ...formData.productData.values })
-            .then(({ data: product }) => {
-                if (product.status === 'Success') {
-                    setLoading(false);
-                    toastAndNavigate(dispatch, true, "success", "Successfully Created", navigateTo, `/${selected.toLowerCase()}/listing`);
-                } else {
-                    setLoading(false);
-                    toastAndNavigate(dispatch, true, "An Error Occurred");
-                };
-            })
-            .catch(err => {
+        API.OrderAPI.createOrder({ ...formData.orderData.values })
+        .then(({ data: order }) => {
+            if (order.status === 'Success') {
                 setLoading(false);
-                toastAndNavigate(dispatch, true, "error", err?.response?.data?.msg);
-                throw err;
-            });
-    };
+                toastAndNavigate(dispatch, true, "success", "Successfully Created", navigateTo, `/${selected.toLowerCase()}/listing`);
+            } else {
+                setLoading(false);
+                toastAndNavigate(dispatch, true, "An Error Occurred");
+            };
+        })
+        .catch(err => {
+            setLoading(false);
+            toastAndNavigate(dispatch, true, "error", err?.response?.data?.msg);
+            throw err;
+        });
+};
 
-    //Create/Update/Populate product
+    //Create/Update/Populate order
     useEffect(() => {
         if (id && !submitted) {
             setTitle("Update");
-            populateProductData(id);
+            populateOrderData(id);
         }
-        if (formData.productData.validated) {
-            formData.productData.values?.id ? updateProduct(formData) : createProduct();
+        if (formData.orderData.validated) {
+            formData.orderData.values?.id ? updateOrder(formData) : createOrder();
         } else {
             setSubmitted(false);
         }
     }, [id, submitted]);
 
     const handleSubmit = async () => {
-        await productFormRef.current.Submit();
+        await orderFormRef.current.Submit();
         setSubmitted(true);
     };
 
     const handleFormChange = (data, form) => {
-        form === 'product' ? setFormData({ ...formData, productData: data }) :
+        form === 'order' ? setFormData({ ...formData, orderData: data }) :
             null;
     };
 
@@ -161,18 +164,18 @@ const FormComponent = () => {
             >
                 {`${title} ${selected}`}
             </Typography>
-            <ProductFormComponent
+            <OrderFormComponent
                 onChange={(data) => {
-                    handleFormChange(data, 'product');
+                    handleFormChange(data, 'order');
                 }}
-                refId={productFormRef}
+                refId={orderFormRef}
                 setDirty={setDirty}
                 reset={reset}
                 setReset={setReset}
                 userId={id}
-                updatedValues={updatedValues?.productData}
+                updatedValues={updatedValues?.orderData}
             />
-            {/*  <AddressFormComponent
+            {/* <AddressFormComponent
                 onChange={(data) => {
                     handleFormChange(data, 'address');
                 }}
@@ -185,7 +188,7 @@ const FormComponent = () => {
             /> */}
 
             <Box display="flex" justifyContent="end" m="20px">
-                {   //hide reset button on product update
+                {   //hide reset button on Order update
                     title === "Update" ? null :
                         <Button type="reset" color="warning" variant="contained" sx={{ mr: 3 }}
                             disabled={!dirty || submitted}

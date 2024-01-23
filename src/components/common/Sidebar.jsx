@@ -13,11 +13,7 @@ import "react-pro-sidebar/dist/css/styles.css";
 
 import { Box, IconButton, Typography, useTheme, useMediaQuery, Divider } from "@mui/material";
 import TuneOutlined from '@mui/icons-material/TuneOutlined'
-import PeopleAltRoundedIcon from '@mui/icons-material/PeopleAltRounded';
-import GridViewRoundedIcon from '@mui/icons-material/GridViewRounded';
-import Inventory2RoundedIcon from '@mui/icons-material/Inventory2Rounded';
-import WarehouseRoundedIcon from '@mui/icons-material/WarehouseRounded';
-import InventoryRoundedIcon from '@mui/icons-material/InventoryRounded';
+import {PeopleAltRounded,GridViewRounded, Inventory2Rounded,WarehouseRounded,InventoryRounded,ShoppingCartTwoTone} from '@mui/icons-material';
 
 import API from "../../apis";
 import { SidebarItem } from "./SidebarItem";
@@ -107,7 +103,7 @@ const Sidebar = () => {
             <SidebarItem
               title="Dashboard"
               to="/"
-              icon={<GridViewRoundedIcon />}
+              icon={<GridViewRounded />}
               selected={selected}
               menuVisibility={2}
             />
@@ -116,7 +112,7 @@ const Sidebar = () => {
             <SidebarItem
               title="Vendor"
               to="/vendor/listing"
-              icon={<PeopleAltRoundedIcon />}
+              icon={<PeopleAltRounded />}
               selected={selected}
             />
             <Divider />
@@ -125,7 +121,7 @@ const Sidebar = () => {
             <SidebarItem
               title="Product"
               to="/product/listing"
-              icon={<Inventory2RoundedIcon />}
+              icon={<Inventory2Rounded />}
               selected={selected}
             />
             <Divider />
@@ -134,7 +130,7 @@ const Sidebar = () => {
             <SidebarItem
               title="Warehouse"
               to="/warehouse/listing"
-              icon={<WarehouseRoundedIcon />}
+              icon={<WarehouseRounded />}
               selected={selected}
             />
             <Divider />
@@ -143,7 +139,16 @@ const Sidebar = () => {
             <SidebarItem
               title="Inventory"
               to="/inventory/listing"
-              icon={<InventoryRoundedIcon />}
+              icon={<InventoryRounded />}
+              selected={selected}
+            />
+            <Divider />
+          </Box>
+          <Box paddingLeft={isCollapsed ? undefined : "10%"}>
+            <SidebarItem
+              title="Order"
+              to="/order/listing"
+              icon={<ShoppingCartTwoTone />}
               selected={selected}
             />
             <Divider />

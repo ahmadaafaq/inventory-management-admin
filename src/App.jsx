@@ -29,6 +29,8 @@ const WarehouseFormComponent = lazy(() => import("./components/warehouse/FormCom
 const WarehouseListingComponent = lazy(() => import("./components/warehouse/ListingComponent"));
 const InventoryFormComponent = lazy(() => import("./components/inventory/FormComponent"));
 const InventoryListingComponent = lazy(() => import("./components/inventory/ListingComponent"));
+const OrderFormComponent = lazy(() => import("./components/order/FormComponent"));
+const OrderListingComponent = lazy(() => import("./components/order/ListingComponent"));
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -99,6 +101,10 @@ function App() {
                 <Route exact path="/inventory/create" element={<InventoryFormComponent />} />
                 <Route exact path="/inventory/update/:id" element={<InventoryFormComponent />} />
                 <Route exact path="/inventory/listing" element={<InventoryListingComponent />} />
+
+                <Route exact path="/order/create" element={<OrderFormComponent />} />
+                <Route exact path="/order/update/:id" element={<OrderFormComponent />} />
+                <Route exact path="/order/listing" element={<OrderListingComponent />} />
               </Routes>
             </main>
           </Suspense>

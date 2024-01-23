@@ -1,0 +1,55 @@
+/**
+ * Copyright © 2023, School CRM Inc. ALL RIGHTS RESERVED.
+ *
+ * This software is the confidential information of School CRM Inc., and is licensed as
+ * restricted rights software. The use,reproduction, or disclosure of this software is subject to
+ * restrictions set forth in your license agreement with School CRM.
+*/
+
+
+
+
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap');
+
+html,
+body,
+#root,
+.app,
+.content {
+  font-family: 'Source Sans Pro', sans-serif;
+  height: 110vh;
+  margin: 0;
+  padding: 0;
+  /* overflow-x: hidden; */
+    /* background-image: url(./components/assets/bg2.webp);
+  background-repeat: no-repeat;
+  background-size: cover; */
+}
+
+.app {
+  display: flex;
+  position: relative;
+}
+
+.content {
+  width: -webkit-fill-available;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background-color: #e0e0e0;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background-color: #888;
+}
+
+/* On Hover */
+::-webkit-scrollbar-track:hover {
+  background-color: #555;
+}
